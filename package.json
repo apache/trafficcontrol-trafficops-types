@@ -1,6 +1,6 @@
 {
 	"name": "trafficops-types",
-	"version": "3.1.0",
+	"version": "3.1.1",
 	"description": "A library for dealing with Apache Traffic Control objects",
 	"main": "dist/index.js",
 	"scripts": {
@@ -12,6 +12,7 @@
 	"keywords": [
 		"Traffic Ops",
 		"trafficops",
+		"trafficcontrol",
 		"Traffic Control",
 		"Apache Traffic Control",
 		"ATC"
@@ -26,13 +27,13 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ocket8888/trafficops-types.git"
+		"url": "https://github.com/apache/trafficcontrol-trafficops-types.git"
 	},
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/ocket8888/trafficops-types#readme",
+	"homepage": "https://github.com/apache/trafficcontrol-trafficops-types#readme",
 	"bugs": {
 		"email": "ocket8888@apache.org",
-		"url": "https://github.com/ocket8888/trafficops-types/issues"
+		"url": "https://github.com/apache/trafficcontrol-trafficops-types/issues"
 	},
 	"type": "module",
 	"devDependencies": {
