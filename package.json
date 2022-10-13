@@ -1,13 +1,14 @@
 {
 	"name": "trafficops-types",
-	"version": "3.1.1",
+	"version": "3.1.2",
 	"description": "A library for dealing with Apache Traffic Control objects",
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "tsc",
 		"lint": "eslint --ext .ts .",
 		"clean": "rm -rf dist",
-		"doc": "typedoc --includeVersion --readme ./README.md src/index.ts"
+		"doc": "typedoc --includeVersion --readme ./README.md src/index.ts",
+		"prepare": "npm run lint && npm run build"
 	},
 	"keywords": [
 		"Traffic Ops",

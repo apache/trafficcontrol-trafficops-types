@@ -134,136 +134,176 @@ interface MidContentServer extends ContentServerBase {
 }
 
 /**
+ * Represents a Snapshot "contentServer" of arbitrary tier.
+ */
+export type SnapshotContentServer = EdgeContentServer | MidContentServer;
+
+/**
+ * Represents a Traffic Router in a CDN Snapshot.
+ */
+export interface SnapshotContentRouter {
+	// These property names are defined by the API and are therefore
+	// beyond my control.
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	"api.port": string;
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	"secure.api.port": string;
+	fqdn: string;
+	httpsPort: number | null;
+	ip: string;
+	ip6: string;
+	location: string;
+	port: number;
+	profile: string;
+	status: string;
+}
+
+/**
+ * Represents a Delivery Service in a CDN Snapshot.
+ */
+export interface SnapshotDeliveryService {
+	anonymousBlockingEnabled: "true" | "false";
+	consistentHashQueryParameters: Array<string>;
+	consistentHashRegex?: string;
+	coverageZoneOnly: "true" | "false";
+	deepCachingType: "ALWAYS" | "NEVER";
+	dispersion: {
+		limit: number;
+		shuffled: "true" | "false";
+	};
+	domains: Array<string>;
+	ecsEnabled: "true" | "false";
+	geolocationProvider: string;
+	ip6RoutingEnabled: "true" | "false";
+	matchsets: Array<{
+		matchList: Array<{
+			// This is beyond my control.
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			"match-type": string;
+			regex: string;
+		}>;
+		protocol: string;
+	}>;
+	missLocation: {
+		lat: number;
+		long: number;
+	};
+	protocol: {
+		acceptHttps: "true" | "false";
+		redirectToHttps: "true" | "false";
+	};
+	regionalGeoBlocking: "true" | "false";
+	requiredCapabilities: Array<string>;
+	routingName: string;
+	soa: {
+		admin: string;
+		expire: string;
+		minimum: string;
+		refresh: string;
+		retry: string;
+	};
+	sslEnabled: "true" | "false";
+	topology?: string;
+	ttls: {
+		/* eslint-disable @typescript-eslint/naming-convention */
+		A: string;
+		AAAA: string;
+		NS: string;
+		SOA: string;
+		/* eslint-enable @typescript-eslint/naming-convention */
+	};
+}
+
+/**
+ * Represents an Edge-tier Cache Group in a CDN Snapshot.
+ */
+export interface SnapshotEdgeLocation {
+	backupLocations: {
+		fallbackToClosest: "true" | "false";
+		list?: Array<string>;
+	};
+	latitude: number;
+	longitude: number;
+	localizationMethods: Array<LocalizationMethod>;
+}
+
+/**
+ * Represents a Traffic Monitor in the context of a CDN Snapshot.
+ */
+export interface SnapshotMonitor {
+	fqdn: string;
+	httpsPort: number | null;
+	ip: string;
+	ip6: string;
+	location: string;
+	port: number;
+	profile: string;
+	status: string;
+}
+
+/**
+ * Represents the "stats" section of a CDN Snapshot.
+ */
+export interface SnapshotStatsSection {
+	/* eslint-disable @typescript-eslint/naming-convention */
+	CDN_name?: string;
+	date?: Date;
+	tm_host?: string;
+	tm_path?: string;
+	tm_user?: string;
+	tm_version?: string;
+	/* eslint-enable @typescript-eslint/naming-convention */
+}
+
+/**
+ * Represents a Traffic Router Cache Group in a CDN Snapshot.
+ */
+export interface SnapshotTrafficRouterLocation {
+	backupLocations: {
+		fallbackToClosest: "true" | "false";
+		list?: Array<string>;
+	};
+	latitude: number;
+	localizationMethods: Array<LocalizationMethod>;
+	longitude: number;
+}
+
+/**
+ * Represents a Topology in a CDN Snapshot.
+ */
+export interface SnapshotTopology {
+	nodes: Array<string>;
+}
+
+/**
  * Represents a CDN Snapshot.
  *
  * Note that this structure is highly volatile, and in general isn't bound by
  * the normal rules of API versioning.
  */
 export interface Snapshot {
-	config: Record<string, unknown>;
-	contentRouters: {
-		[routerHostName: string]: {
-			// These property names are defined by the API and are therefore
-			// beyond my control.
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			"api.port": string;
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			"secure.api.port": string;
-			fqdn: string;
-			httpsPort: number | null;
-			ip: string;
-			ip6: string;
-			location: string;
-			port: number;
-			profile: string;
-			status: string;
-		};
+	config?: Record<string, string>;
+	contentRouters?: {
+		[routerHostName: string]: SnapshotContentRouter;
 	};
-	contentServers: {
-		[cacheServerHostName: string]: EdgeContentServer | MidContentServer;
+	contentServers?: {
+		[cacheServerHostName: string]: SnapshotContentServer;
 	};
-	deliveryServices: {
-		[xmlID: string]: {
-			anonymousBlockingEnabled: "true" | "false";
-			consistentHashQueryParameters: Array<string>;
-			consistentHashRegex?: string;
-			coverageZoneOnly: "true" | "false";
-			deepCachingType: "ALWAYS" | "NEVER";
-			dispersion: {
-				limit: number;
-				shuffled: "true" | "false";
-			};
-			domains: Array<string>;
-			ecsEnabled: "true" | "false";
-			geolocationProvider: string;
-			ip6RoutingEnabled: "true" | "false";
-			matchsets: Array<{
-				matchList: Array<{
-					// This is beyond my control.
-					// eslint-disable-next-line @typescript-eslint/naming-convention
-					"match-type": string;
-					regex: string;
-				}>;
-				protocol: string;
-			}>;
-			missLocation: {
-				lat: number;
-				long: number;
-			};
-			protocol: {
-				acceptHttps: "true" | "false";
-				redirectToHttps: "true" | "false";
-			};
-			regionalGeoBlocking: "true" | "false";
-			requiredCapabilities: Array<string>;
-			routingName: string;
-			soa: {
-				admin: string;
-				expire: string;
-				minimum: string;
-				refresh: string;
-				retry: string;
-			};
-			sslEnabled: "true" | "false";
-			topology?: string;
-			ttls: {
-				/* eslint-disable @typescript-eslint/naming-convention */
-				A: string;
-				AAAA: string;
-				NS: string;
-				SOA: string;
-				/* eslint-enable @typescript-eslint/naming-convention */
-			};
-		};
+	deliveryServices?: {
+		[xmlID: string]: SnapshotDeliveryService;
 	};
-	edgeLocations: {
-		[name: string]: {
-			backupLocations: {
-				fallbackToClosest: "true" | "false";
-				list?: Array<string>;
-			};
-			latitude: number;
-			longitude: number;
-			localizationMethods: Array<LocalizationMethod>;
-		};
+	edgeLocations?: {
+		[name: string]: SnapshotEdgeLocation;
 	};
-	monitors: {
-		[monitorHostName: string]: {
-			fqdn: string;
-			httpsPort: number | null;
-			ip: string;
-			ip6: string;
-			location: string;
-			port: number;
-			profile: string;
-			status: string;
-		};
+	monitors?: {
+		[monitorHostName: string]: SnapshotMonitor;
 	};
-	stats: {
-		/* eslint-disable @typescript-eslint/naming-convention */
-		CDN_name: string;
-		date: Date;
-		tm_host: string;
-		tm_path: string;
-		tm_user: string;
-		tm_version: string;
-		/* eslint-enable @typescript-eslint/naming-convention */
-	};
+	stats?: SnapshotStatsSection;
 	topologies?: {
-		[name: string]: {
-			nodes: Array<string>;
-		};
+		[name: string]: SnapshotTopology;
 	};
-	trafficRouterLocations: {
-		[name: string]: {
-			backupLocations: {
-				fallbackToClosest: "true" | "false";
-				list?: Array<string>;
-			};
-			latitude: number;
-			localizationMethods: Array<LocalizationMethod>;
-			longitude: number;
-		};
+	trafficRouterLocations?: {
+		[name: string]: SnapshotTrafficRouterLocation;
 	};
 }
 
