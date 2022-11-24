@@ -359,6 +359,8 @@ interface RequestDeliveryServiceBase {
 	 * Service belongs.
 	 */
 	tenantId: number;
+	/** A list of explicitly supported TLS versions. */
+	tlsVersions?: undefined | null | [string, ...string[]];
 	topology?: string | null;
 	/**
 	 * HTTP headers that should be logged from client requests by Traffic
@@ -664,6 +666,8 @@ interface ResponseDeliveryServiceBase {
 	 * Service belongs.
 	 */
 	tenantId: number;
+	/** A list of explicitly supported TLS versions. */
+	tlsVersions: null | [string, ...string[]];
 	topology: string | null;
 	/** Extra HTTP headers that Traffic Router should provide in responses. */
 	trResponseHeaders: string | null;
