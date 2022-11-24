@@ -137,7 +137,12 @@ export type DeliveryServiceRequest = ResponseDeliveryServiceRequest | RequestDel
  * Both an undefined value and `null` mean "remove the current assignee".
  */
 export interface DeliveryServiceAssignmentChangeRequest {
-	assigneeId?: number | null;
+	assignee?: string | null | undefined;
+	/**
+	 * In the event that `assignee` and `assigneeId` identify different users,
+	 * the `assigneeId` will take precedence.
+	 */
+	assigneeId?: number | null | undefined;
 }
 
 /**
