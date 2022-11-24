@@ -75,6 +75,9 @@ export interface DeliveryServiceSSLKeyGenerationRequest {
  * Represents a request to have Traffic Ops generate an SSL Key/Certificate pair
  * for a Delivery Service using LetsEncrypt (or another configured ACME
  * service).
+ *
+ * @deprecated This has been superseded by the more general
+ * {@link ACMEDeliveryServiceSSLKeyGenerationRequest}.
  */
 export interface LetsEncryptDeliveryServiceSSLKeyGenerationRequest {
 	cdn: string;
@@ -82,6 +85,40 @@ export interface LetsEncryptDeliveryServiceSSLKeyGenerationRequest {
 	hostname: string;
 	key: string;
 	version: string;
+}
+
+/**
+ * Represents a request to have Traffic Ops request an SSL Key/Certificate pair
+ * for a Delivery Service from an ACME provider.
+ */
+export interface ACMEDeliveryServiceSSLKeyGenerationRequest{
+	/**
+	 * The certificate provider correlating to an ACME account in cdn.conf or
+	 * Let’s Encrypt.
+	 */
+	authType: string;
+	/**
+	 * The XMLID of the Delivery Service for which keys will be generated.
+	 *
+	 * Either the `key` or the `deliveryservice` field must be provided. If both
+	 * are provided, then they must match.
+	 */
+	key?: string | null | undefined;
+	/**
+	 * The XMLID of the Delivery Service for which keys will be generated.
+	 *
+	 * Either the `key` or the `deliveryservice` field must be provided. If both
+	 * are provided, then they must match.
+	 */
+	deliveryservice?: string | null | undefined;
+	/**
+	 * An integer that defines the "version" of the key - which may be thought
+	 * of as the sequential generation; that is, the higher the number the more
+	 * recent the key.
+	 */
+	version: string;
+	/** The desired hostname of the Delivery Service. */
+	hostname: string;
 }
 
 /**
