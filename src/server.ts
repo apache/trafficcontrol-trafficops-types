@@ -527,11 +527,15 @@ export interface ServerDetails  {
  * current state.
  */
 export interface ServerUpdateStatus {
+	configApplyTime: Date;
+	configUpdateTime: Date;
 	/* eslint-disable @typescript-eslint/naming-convention */
 	host_id: number;
 	host_name: string;
 	parent_pending: boolean;
 	parent_reval_pending: boolean;
+	revalUpdateTime: Date;
+	revalApplyTime: Date;
 	reval_pending: boolean;
 	status: string;
 	upd_pending: boolean;
