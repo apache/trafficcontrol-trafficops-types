@@ -141,4 +141,5 @@ export interface ResponseDeliveryServiceSSLKey {
 	state?: string;
 	version: string;
 	expiration: Date;
+	sans?: [string, ...string[]];
 }
