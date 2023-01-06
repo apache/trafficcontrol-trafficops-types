@@ -92,8 +92,8 @@ export interface RequestCacheGroup {
 	 */
 	longitude?: number | null;
 	name: string;
-	parentCacheGroupId?: number | null;
-	secondaryParentCacheGroupId?: number | null;
+	parentCachegroupId?: number | null;
+	secondaryParentCachegroupId?: number | null;
 	shortName: string;
 	typeId: number;
 }
@@ -120,16 +120,16 @@ interface ResponseCacheGroupBase {
  * non-null.
  */
 interface ResponseCacheGroupWithParent extends ResponseCacheGroupBase {
-	parentCacheGroupId: number;
-	parentCacheGroupName: string;
+	parentCachegroupId: number;
+	parentCachegroupName: string;
 }
 
 /**
  * A Cache Group with no parent. All related fields are guaranteed to be null.
  */
 interface ResponseCacheGroupWithoutParent extends ResponseCacheGroupBase {
-	parentCacheGroupId: null;
-	parentCacheGroupName: null;
+	parentCachegroupId: null;
+	parentCachegroupName: null;
 }
 
 /**
@@ -137,8 +137,8 @@ interface ResponseCacheGroupWithoutParent extends ResponseCacheGroupBase {
  * be non-null.
  */
 interface ResponseCacheGroupWithSecondaryParent extends ResponseCacheGroupBase {
-	secondaryParentCacheGroupId: number;
-	secondaryParentCacheGroupName: string;
+	secondaryParentCachegroupId: number;
+	secondaryParentCachegroupName: string;
 }
 
 /**
@@ -146,8 +146,8 @@ interface ResponseCacheGroupWithSecondaryParent extends ResponseCacheGroupBase {
  * to be null.
  */
 interface ResponseCacheGroupWithoutSecondaryParent extends ResponseCacheGroupBase {
-	secondaryParentCacheGroupId: null;
-	secondaryParentCacheGroupName: null;
+	secondaryParentCachegroupId: null;
+	secondaryParentCachegroupName: null;
 }
 
 /** A Cache Group with a parent but no secondary parent. */
