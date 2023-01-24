@@ -203,18 +203,34 @@ export type CurrentUser = ResponseCurrentUser | RequestCurrentUser;
  * Represents a Role as Traffic Ops requires it in requests.
  */
 export interface RequestRole {
-	capabilities: Array<string>;
+	/**
+	 * This will be null in responses if it is null or undefined in the request.
+	 */
+	permissions?: Array<string> | null;
 	description: string;
 	name: string;
-	privLevel: number;
+}
+
+/**
+ * Represents a Role in a response to a PUT request.
+ *
+ * Note that this should not be different from a `PostResponseRole` - but
+ * currently is (because it's missing `lastUpdated`). This bug is tracked by
+ * [apache/trafficcontrol#7248](https://github.com/apache/trafficcontrol/issues/7248).
+ */
+export type PutResponseRole = RequestRole;
+
+/**
+ * Represents a Role as Traffic Ops presents it in responses to POST requests.
+ */
+export interface PostResponseRole extends PutResponseRole {
+	readonly lastUpdated: Date;
 }
 
 /**
  * Represents a Role as Traffic Ops presents it in responses.
  */
-export interface ResponseRole extends RequestRole {
-	readonly id: number;
-}
+export type ResponseRole = PutResponseRole | PostResponseRole;
 
 /**
  * A Role encapsulates the permissions to perform operations through the Traffic
