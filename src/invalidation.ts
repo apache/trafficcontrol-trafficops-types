@@ -18,8 +18,16 @@
 
 /** JobType enumerates the valid types of Job. */
 export const enum JobType {
-	/** Content Invalidation Request. */
-	PURGE = "PURGE"
+	/**
+	 * Requests that cache servers ignore caching rules and forcibly retrieve a
+	 * new copy of the content.
+	 *
+	 * @deprecated This should never be necessary, as it only has value when an
+	 * Origin doesn't respect HTTP standards.
+	 */
+	REFETCH = "REFETCH",
+	/** Requests that cache servers treat content as stale. */
+	REFRESH = "REFRESH"
 }
 
 /**
@@ -32,26 +40,18 @@ export interface ResponseInvalidationJob {
 	 * "revalidated".
 	 */
 	assetURL: string;
-	/**
-	 * The name of the user that created the Job.
-	 */
+	/** The name of the user that created the Job. */
 	createdBy: string;
 	/** The XMLID of the Delivery Service within which the Job will operate. */
 	deliveryService: string;
 	/** An integral, unique identifier for this Job. */
 	readonly id: number;
 	/** The type of Job. */
-	keyword: JobType;
-	/**
-	 * though not enforced by the API (or database), this should ALWAYS have the
-	 * format 'TTL:nh', describing the job's TTL in hours (`n` can be any
-	 * integer value > 0).
-	 */
-	parameters: string;
-	/**
-	 * The time at which the Job is scheduled to start.
-	 */
+	invalidationType: JobType;
+	/** The time at which the Job is scheduled to start. */
 	startTime: Date;
+	/** The number of hours for which the Job will remain active. */
+	ttlHours: number;
 }
 
 /**
@@ -59,24 +59,14 @@ export interface ResponseInvalidationJob {
  * content invalidation job through the API.
  */
 export interface RequestInvalidationJob {
-	/**
-	 * This may be either the ID or the XMLID of the Delivery Service to which
-	 * the Job will apply.
-	 */
-	deliveryService: number | string;
-	/**
-	 * The effective starting date/time for the Job.
-	 */
-	startTime: Date | string;
-	/**
-	 * A pattern that matches content to be invalidated.
-	 */
+	/** The XMLID of the Delivery Service to which the Job will apply. */
+	deliveryService: string;
+	/** A pattern that matches content to be invalidated. */
 	regex: string;
-	/**
-	 * Either the number of hours or a "duration string" describing for how
-	 * long the Job will remain in effect.
-	 */
-	ttl: number | string;
+	/** The effective starting date/time for the Job. */
+	startTime: Date | string;
+	/** The number of hours for which the Job will remain in effect. */
+	ttlHours: number;
 }
 
 /** Represents a content invalidation job. */
