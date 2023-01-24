@@ -33,14 +33,15 @@ export interface PostRequestUser {
 	/** @deprecated This has no purpose and should never be used. */
 	gid?: number | null;
 	localPasswd: string;
+	/** @deprecated This has no purpose and should never be used. */
 	newUser?: boolean | null;
 	phoneNumber?: string | null;
 	postalCode?: string | null;
 	publicSshKey?: string | null;
-	role: number;
+	role: string;
 	stateOrProvince?: string | null;
-	tenantId?: never;
-	tenantID: number;
+	tenantId: number;
+	ucdn?: string | null;
 	/** @deprecated This has no purpose and should never be used. */
 	uid?: number | null;
 	username: string;
@@ -64,10 +65,11 @@ interface PutRequestNotChangingPasswordUser {
 	phoneNumber?: string | null;
 	postalCode?: string | null;
 	publicSshKey?: string | null;
-	role: number;
+	role: string;
 	stateOrProvince?: string | null;
 	tenantId?: never;
 	tenantID: number;
+	ucdn?: string | null;
 	/** @deprecated This has no purpose and should never be used. */
 	uid?: number | null;
 	username: string;
@@ -83,10 +85,11 @@ export type PutRequestUser = PostRequestUser | PutRequestNotChangingPasswordUser
 /** Generically represents a user in the context of a request. */
 export type RequestUser = PutRequestUser | PostRequestUser;
 
-/** Groups the fields common to responses from /users in all contexts. */
-interface ResponseUserBase {
+/** Generically represents a user in the context of a response. */
+export interface ResponseUser {
 	addressLine1: string | null;
 	addressLine2: string | null;
+	readonly changeLogCount: number;
 	city: string | null;
 	company: string | null;
 	country: string | null;
@@ -94,61 +97,30 @@ interface ResponseUserBase {
 	fullName: string;
 	/** @deprecated This has no purpose and should never be used. */
 	gid: number | null;
-	id: number;
-	/**
-	 * This is actually a string that represents a date/time, in a custom
-	 * format. Refer to
-	 * [the Traffic Ops API documentation](https://traffic-control-cdn.readthedocs.io/en/latest/api/index.html#traffic-ops-s-custom-date-time-format)
-	 * for details.
-	 */
+	readonly id: number;
+	readonly lastAuthenticated: Date | null;
 	readonly lastUpdated: Date;
+	/** @deprecated This has no known purpose and shouldn't be used. */
 	newUser: boolean | null;
 	phoneNumber: string | null;
 	postalCode: string | null;
 	publicSshKey: string | null;
-	/**
-	 * This is actually a string that represents a date/time, in a custom
-	 * format. Refer to
-	 * [the Traffic Ops API documentation](https://traffic-control-cdn.readthedocs.io/en/latest/api/index.html#traffic-ops-s-custom-date-time-format)
-	 * for details.
-	 */
 	registrationSent?: null | Date;
-	role: number;
+	role: string;
 	stateOrProvince: string | null;
 	tenant: string;
-	tenantID?: never;
 	tenantId: number;
+	ucdn: string;
 	/** @deprecated This has no purpose and should never be used. */
 	uid: number | null;
 	username: string;
 }
 
-/** Represents a response from /users to a PUT or POST request. */
-export interface PutOrPostResponseUser extends ResponseUserBase {
-	/**
-	 * This appears only in response to POST requests, or to PUT requests where
-	 * the user's password was changed.
-	 */
-	confirmLocalPasswd?: string;
-	rolename?: never;
-	roleName: string;
-}
-
-/** Represents a response from /users to a GET request. */
-export interface GetResponseUser extends ResponseUserBase {
-	confirmLocalPasswd?: never;
-	rolename: string;
-	roleName?: never;
-}
-
-/** Generically represents a user in the context of a response. */
-export type ResponseUser = GetResponseUser | PutOrPostResponseUser;
-
 /**
  * User generically represents a user in the context of a PUT, POST, or GET
  * request or response to/from /users.
  */
-export type User = PutRequestUser | PostRequestUser | PutOrPostResponseUser | GetResponseUser;
+export type User = RequestUser | ResponseUser;
 
 /**
  * ResponseCurrentUser represents a response from /user/current.
@@ -162,22 +134,16 @@ export interface ResponseCurrentUser {
 	email: `${string}@${string}.${string}`;
 	fullName: string;
 	gid: number | null;
-	id: number;
-	/**
-	 * This is actually a string that represents a date/time, in a custom
-	 * format. Refer to
-	 * [the Traffic Ops API documentation](https://traffic-control-cdn.readthedocs.io/en/latest/api/index.html#traffic-ops-s-custom-date-time-format)
-	 * for details.
-	 */
+	readonly id: number;
+	readonly lastAuthenticated: null | Date;
 	readonly lastUpdated: Date;
 	localUser: boolean;
 	newUser: boolean;
 	phoneNumber: string | null;
 	postalCode: string | null;
 	publicSshKey: string | null;
-	role: number;
-	rolename?: never;
-	roleName: string;
+	readonly registrationSent: null | Date;
+	role: string;
 	stateOrProvince: string | null;
 	tenant: string;
 	tenantId: number;
@@ -196,8 +162,7 @@ export function userEmailIsValid(email: string): email is `${string}@${string}.$
 }
 
 /**
- * Currently, a request to /user/current has no properties. This bug is tracked
- * by apache/trafficcontrol#6367.
+ * Represents a request to modify the current user.
  */
 export interface RequestCurrentUser {
 	addressLine1?: string | null;
@@ -205,57 +170,25 @@ export interface RequestCurrentUser {
 	city?: string | null;
 	company?: string | null;
 	country?: string | null;
-	/**
-	 * Note that while this is allowed to be null or undefined, it will **not**
-	 * be allowed to be either of those things as a property of a
-	 * {@link PostRequestUser} nor as a property of a {@link PutRequestUser}.
-	 * This means that setting it as such can cause problems for future requests
-	 * and should be avoided whenever possible.
-	 */
-	email?: string | null;
-	/**
-	 * Note that while this is allowed to be null or undefined, it will **not**
-	 * be allowed to be either of those things as a property of a
-	 * {@link PostRequestUser} nor as a property of a {@link PutRequestUser}.
-	 * This means that setting it as such can cause problems for future requests
-	 * and should be avoided whenever possible.
-	 */
-	fullName?: string | null;
+	email: string;
+	fullName: string;
 	/**
 	 * @deprecated This serves no purpose and is subject to removal in the
 	 * future.
 	 */
 	gid?: number | null;
-	localUser?: boolean | null;
-	newUser?: boolean | null;
 	phoneNumber?: string | null;
 	postalCode?: string | null;
 	publicSshKey?: string | null;
-	/**
-	 * Unlike in virtually every other context, this is allowed to be `null` or
-	 * undefined. In that case, it has the meaning "leave this unchanged" rather
-	 * than setting it to `null` as with most other properties.
-	 */
-	role?: number | null;
+	role: string;
 	stateOrProvince?: string | null;
-	/**
-	 * Unlike in virtually every other context, this is allowed to be `null` or
-	 * undefined. In that case, it has the meaning "leave this unchanged" rather
-	 * than setting it to `null` as with most other properties.
-	 */
-	tenantId?: number | null;
-	tenantID?: never;
+	tenantId: number;
 	/**
 	 * @deprecated This serves no purpose and is subject to removal in the
 	 * future.
 	 */
 	uid?: number | null;
-	/**
-	 * Unlike in virtually every other context, this is allowed to be `null` or
-	 * undefined. In that case, it has the meaning "leave this unchanged" rather
-	 * than setting it to `null` as with most other properties.
-	 */
-	username?: never;
+	username: string;
 }
 
 /**
