@@ -126,3 +126,30 @@ export interface ResponseServerServerCapability {
  * a Server Capability it ostensibly possesses.
  */
 export type ServerServerCapability = RequestServerServerCapability | RequestServerServerCapabilityResponse | ResponseServerServerCapability;
+
+/**
+ * Represents a response to a request to simultaneously create multiple
+ * associations between servers and Server Capabilities they now possess.
+ */
+export interface ResponseMultipleServerCapabilities {
+	serverIds: Array<number>;
+	serverCapabilities: Array<string>;
+}
+
+/**
+ * Represents a request to simultaneously create multiple associations between
+ * servers and Server Capabilities they will then possess.
+ */
+export interface RequestMultipleServerCapabilities extends ResponseMultipleServerCapabilities{
+	/**
+	 * The purpose of this property is unknown, and it may be removed before
+	 * 4.1's release.
+	 */
+	pageType: "server" | "sc";
+}
+
+/**
+ * Generically represents multiple simultaneously created server-and-Server
+ * Capability associations in the context of either a request or a response.
+ */
+export type MultipleServerCapabilities = RequestMultipleServerCapabilities | ResponseMultipleServerCapabilities;
