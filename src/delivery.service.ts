@@ -178,7 +178,7 @@ interface RequestDeliveryServiceBase {
 	/** Whether or not the Delivery Service is actively routed. */
 	active: boolean;
 	/** Whether or not anonymization services are blocked. */
-	anonymousBlockingEnabled?: number | null;
+	anonymousBlockingEnabled?: boolean | null;
 	/**
 	 * @deprecated This field no longer works and is subject to removal in the
 	 * future.
