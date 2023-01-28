@@ -82,9 +82,9 @@ export const enum Protocol {
  * Converts Protocols to a textual representation.
  *
  * @param p The Protocol to convert.
- * @returns A string representation of 'p', or 'UNKNOWN' if 'p' was unrecognized.
+ * @returns A string representation of 'p', or a blank string if 'p' was null.
  */
-export function protocolToString(p: Protocol): string {
+export function protocolToString(p: Protocol | null): string {
 	switch (p) {
 		case Protocol.HTTP:
 			return "Serve only unsecured HTTP requests";
@@ -95,6 +95,7 @@ export function protocolToString(p: Protocol): string {
 		case Protocol.HTTP_TO_HTTPS:
 			return "Serve secured HTTPS requests normally, but redirect unsecured HTTP requests to use HTTPS";
 	}
+	return "";
 }
 
 /**
