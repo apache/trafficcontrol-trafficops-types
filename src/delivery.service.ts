@@ -211,7 +211,7 @@ interface RequestDeliveryServiceBase {
 	/** An IPv6 address to use for DNS-routed bypass scenarios. */
 	dnsBypassIp6?: string | null;
 	/** The TTL of DNS responses served in bypass scenarios. */
-	dnsBypassTtl?: string | null;
+	dnsBypassTtl?: number | null;
 	/** The Delivery Service's DSCP. */
 	dscp: number;
 	ecsEnabled?: boolean | null;
@@ -624,19 +624,19 @@ interface ResponseDeliveryServiceBase {
 	/** A string used to shield the Origin, somehow. */
 	originShield: string | null;
 	/** The URL of the Origin server, which I think means nothing for MSO. */
-	orgServerFqdn: string;
+	orgServerFqdn: string | null;
 	/** The protocols served by the Delivery Service. */
-	protocol: Protocol;
+	protocol: Protocol | null;
 	/**
 	 * How query strings ought to be handled by cache servers serving content
 	 * for this Delivery Service.
 	 */
-	qstringIgnore: QStringHandling;
+	qstringIgnore: QStringHandling | null;
 	/**
 	 * How HTTP Range requests ought to be handled by cache servers serving
 	 * content for this Delivery Service.
 	 */
-	rangeRequestHandling: RangeRequestHandling;
+	rangeRequestHandling: RangeRequestHandling | null;
 	rangeSliceBlockSize: null | number;
 	/** Some raw text to be inserted into regex_remap.config. */
 	regexRemap: string | null;
@@ -656,7 +656,7 @@ interface ResponseDeliveryServiceBase {
 	 * The algorithm used to sign responses from the cache servers for this
 	 * Delivery Service's content.
 	 */
-	signingAlgorithm: "url_sig" | "uri_signing";
+	signingAlgorithm: "url_sig" | "uri_signing" | null;
 	/** The generation of SSL key used by this Delivery Service. */
 	sslKeyVersion: number | null;
 	/** The name of the Tenant to whom this Delivery Service belongs. */
