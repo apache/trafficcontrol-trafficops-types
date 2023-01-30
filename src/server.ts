@@ -308,7 +308,7 @@ export interface RequestServer {
 	/** The Server's ILO interface's root user's name. */
 	iloUsername?: string | null;
 	/** The Server's network interfaces. */
-	interfaces: [Interface, ...Interface[]];
+	interfaces: Array<Interface>;
 	/** The IP address of the server's management interface. */
 	mgmtIpAddress?: string | null;
 	/** The IP address of the gateway to the Server's management interface. */
@@ -479,7 +479,7 @@ export interface ResponseServercheckExtension {
 export type ServercheckExtension = RequestServercheckExtension | ResponseServercheckExtension;
 
 /**
- * @deprecated This gives no useful information that an {@link Server} doesn't,
+ * @deprecated This gives no useful information that a {@link Server} doesn't,
  * so there's no reason to use it.
  */
 export interface ServerDetails  {
