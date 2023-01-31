@@ -67,8 +67,7 @@ interface PutRequestNotChangingPasswordUser {
 	publicSshKey?: string | null;
 	role: string;
 	stateOrProvince?: string | null;
-	tenantId?: never;
-	tenantID: number;
+	tenantId: number;
 	ucdn?: string | null;
 	/** @deprecated This has no purpose and should never be used. */
 	uid?: number | null;
