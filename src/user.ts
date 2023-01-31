@@ -128,6 +128,7 @@ export type User = RequestUser | ResponseUser;
 export interface ResponseCurrentUser {
 	addressLine1: string | null;
 	addressLine2: string | null;
+	readonly changeLogCount: number;
 	city: string | null;
 	company: string | null;
 	country: string | null;
@@ -147,6 +148,7 @@ export interface ResponseCurrentUser {
 	stateOrProvince: string | null;
 	tenant: string;
 	tenantId: number;
+	ucdn: string;
 	uid: number | null;
 	username: string;
 }
@@ -183,6 +185,7 @@ export interface RequestCurrentUser {
 	role: string;
 	stateOrProvince?: string | null;
 	tenantId: number;
+	ucdn?: string | null;
 	/**
 	 * @deprecated This serves no purpose and is subject to removal in the
 	 * future.
