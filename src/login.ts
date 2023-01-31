@@ -60,6 +60,6 @@ export interface ResetPasswordRequest {
  */
 export interface RegistrationRequest {
 	email: `${string}@${string}.${string}`;
-	role: number;
+	role: string;
 	tenantId: number;
 }
