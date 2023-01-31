@@ -104,7 +104,7 @@ export interface ResponseUser {
 	phoneNumber: string | null;
 	postalCode: string | null;
 	publicSshKey: string | null;
-	registrationSent?: null | Date;
+	readonly registrationSent: null | Date;
 	role: string;
 	stateOrProvince: string | null;
 	tenant: string;
