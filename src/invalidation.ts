@@ -61,6 +61,8 @@ export interface ResponseInvalidationJob {
 export interface RequestInvalidationJob {
 	/** The XMLID of the Delivery Service to which the Job will apply. */
 	deliveryService: string;
+	/** The type of revalidation to perform. */
+	invalidationType: JobType;
 	/** A pattern that matches content to be invalidated. */
 	regex: string;
 	/** The effective starting date/time for the Job. */
