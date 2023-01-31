@@ -345,6 +345,8 @@ export interface RequestServer {
 	routerPortName?: string | null;
 	/** An integral, unique, identifier for the Server's Status. */
 	statusId: number;
+	/** A port on which the Server listens for TCP connections. */
+	tcpPort?: number | null;
 	/** An integral, unique identifier for the Type of this Server. */
 	typeId: number;
 }
@@ -516,7 +518,7 @@ export interface ServerDetails  {
 	routerHostName: string;
 	routerPortName: string;
 	status: string;
-	tcpPort: number;
+	tcpPort: number | null;
 	type: string;
 	xmppId: string;
 	xmppPasswd: string;
