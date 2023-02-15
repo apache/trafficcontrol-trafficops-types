@@ -26,6 +26,11 @@ export interface RequestCDN {
 	domainName:    string;
 	/** The name of the CDN. */
 	name:          string;
+	/**
+	 * A TTL (Time To Live) value, in seconds, that, if set, overrides all set
+	 * TTL values on Delivery Services in this CDN.
+	 */
+	ttlOverride?: number | null;
 }
 
 /**
