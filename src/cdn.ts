@@ -31,12 +31,9 @@ export interface RequestCDN {
 /**
  * Represents a CDN as returned by the Traffic Ops API in responses.
  */
-export interface ResponseCDN {
-	dnssecEnabled: boolean;
-	domainName: string;
+export interface ResponseCDN extends RequestCDN {
 	readonly id: number;
 	readonly lastUpdated: Date;
-	name: string;
 }
 
 /** Represents a CDN. */
