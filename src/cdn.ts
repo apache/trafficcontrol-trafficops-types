@@ -30,7 +30,7 @@ export interface RequestCDN {
 	 * A TTL (Time To Live) value, in seconds, that, if set, overrides all set
 	 * TTL values on Delivery Services in this CDN.
 	 */
-	ttlOverride?: number | null;
+	ttlOverride?: number;
 }
 
 /**
