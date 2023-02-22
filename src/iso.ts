@@ -25,6 +25,10 @@ interface ISOFields {
 	interfaceName?: string | null;
 	ip6Address?: string | null;
 	ip6Gateway?: string | null;
+	mgmtInterface?: string | null;
+	mgmtIpAddress?: string | null;
+	mgmtIpGateway?: string | null;
+	mgmtIpNetmask?: string | null;
 	osVersionDir: string;
 	rootPass: string;
 }
