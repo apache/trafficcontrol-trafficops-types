@@ -208,7 +208,7 @@ export interface ResponseServer {
 	 */
 	physLocationId: number;
 	/** The Profile used by the Server. */
-	profile: string;
+	profile: string | null;
 	/**
 	 * A description of the Profile used by the Server.
 	 *
@@ -216,7 +216,7 @@ export interface ResponseServer {
 	 * Profile description entirely, as it's trivially deduced from Profile
 	 * identity.
 	 */
-	profileDesc: string;
+	profileDesc: string | null;
 	/**
 	 * An integral, unique identifier for the Profile used by the Server.
 	 *
@@ -518,10 +518,11 @@ export interface ServerDetails  {
 	mgmtIpNetmask: string;
 	offlineReason: string;
 	physLocation: string;
-	profile: string;
+	profile: string | null;
 	/** @deprecated This has been removed from the latest API version. */
-	profileDesc: string;
+	profileDesc: string | null;
 	/** @deprecated this has no known purpose, and you shouldn't invent one. */
+	profileNames: Array<string>;
 	rack: string;
 	routerHostName: string;
 	routerPortName: string;
