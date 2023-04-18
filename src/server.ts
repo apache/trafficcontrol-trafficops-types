@@ -223,7 +223,11 @@ export interface ResponseServer {
 	 * @deprecated In the latest API version, a server's Profile is identified
 	 * only by name, not unique, integral identifier.
 	 */
-	profileId: number;
+	profileId: number | null;
+	/**
+	 * An _ordered_ array of strings representing the Profiles used by this server
+	 */
+	profileNames: Array<string>;
 	/** Whether or not revalidations are pending for this Server. */
 	revalPending: boolean;
 	/**
@@ -331,7 +335,11 @@ export interface RequestServer {
 	 * @deprecated In the latest API version, a server's Profile is identified
 	 * only by name, not unique, integral identifier.
 	 */
-	profileId: number;
+	profileId: number | null;
+	/**
+	 * An _ordered_ array of strings representing the Profiles used by this server
+	 */
+	profileNames: Array<string>;
 	/**
 	 * Legacy field with no purpose.
 	 *
