@@ -203,27 +203,14 @@ export interface ResponseServer {
 	/** The physical location in which the Server resides. */
 	physLocation: string;
 	/**
-	 * An integral, unique identifier for the physical location in which the
-	 * Server resides.
-	 */
+	* An integral, unique identifier for the physical location in which the
+	* Server resides.
+	*/
 	physLocationId: number;
-	/** The Profile used by the Server. */
-	profile: string;
 	/**
-	 * A description of the Profile used by the Server.
-	 *
-	 * @deprecated Future representations of Server objects will drop the
-	 * Profile description entirely, as it's trivially deduced from Profile
-	 * identity.
+	 * An _ordered_ array of strings representing the Profiles used by this server
 	 */
-	profileDesc: string;
-	/**
-	 * An integral, unique identifier for the Profile used by the Server.
-	 *
-	 * @deprecated In the latest API version, a server's Profile is identified
-	 * only by name, not unique, integral identifier.
-	 */
-	profileId: number;
+	profileNames: Array<string>;
 	/** Whether or not revalidations are pending for this Server. */
 	revalPending: boolean;
 	/**
@@ -326,12 +313,9 @@ export interface RequestServer {
 	 */
 	physLocationId: number;
 	/**
-	 * An integral, unique identifier for the Profile used by the Server.
-	 *
-	 * @deprecated In the latest API version, a server's Profile is identified
-	 * only by name, not unique, integral identifier.
+	 * An _ordered_ array of strings representing the Profiles used by this server
 	 */
-	profileId: number;
+	profileNames: Array<string>;
 	/**
 	 * Legacy field with no purpose.
 	 *
@@ -510,9 +494,7 @@ export interface ServerDetails  {
 	mgmtIpNetmask: string;
 	offlineReason: string;
 	physLocation: string;
-	profile: string;
-	/** @deprecated This has been removed from the latest API version. */
-	profileDesc: string;
+	profileNames: Array<string>;
 	/** @deprecated this has no known purpose, and you shouldn't invent one. */
 	rack: string;
 	routerHostName: string;
