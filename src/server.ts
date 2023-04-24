@@ -203,6 +203,11 @@ export interface ResponseServer {
 	/** The physical location in which the Server resides. */
 	physLocation: string;
 	/**
+	* An integral, unique identifier for the physical location in which the
+	* Server resides.
+	*/
+	physLocationId: number;
+	/**
 	 * An _ordered_ array of strings representing the Profiles used by this server
 	 */
 	profileNames: Array<string>;
