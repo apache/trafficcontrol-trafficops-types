@@ -21,7 +21,7 @@
  */
 export interface RequestTopologyNode {
 	cachegroup: string;
-	parents?: [number, number] | [number] | [] | null;
+	parents?: Array<number> | null;
 }
 
 /**
@@ -29,7 +29,7 @@ export interface RequestTopologyNode {
  */
 export interface ResponseTopologyNode {
 	cachegroup: string;
-	parents: [number, number] | [number] | null;
+	parents: Array<number>;
 }
 
 /**
