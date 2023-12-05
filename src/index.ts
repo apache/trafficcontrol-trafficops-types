@@ -51,6 +51,7 @@ export * from "./type.js";
 export * from "./uri.signing.js";
 export * from "./user.js";
 export * from "./vault.js";
+export * from "./origin.js";
 
 /**
  * Represents a version of the Traffic Ops API for which this library was made.
