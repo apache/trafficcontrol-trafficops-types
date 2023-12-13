@@ -94,7 +94,6 @@ export interface RequestCacheGroup {
 	name: string;
 	parentCachegroupId?: number | null;
 	secondaryParentCachegroupId?: number | null;
-	shortName: string;
 	typeId: number;
 }
 
@@ -110,7 +109,6 @@ interface ResponseCacheGroupBase {
 	localizationMethods: Array<LocalizationMethod>;
 	longitude: number | null;
 	name: string;
-	shortName: string;
 	typeId: number;
 	typeName: string;
 }
